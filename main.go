@@ -35,9 +35,9 @@ func main() {
 
 	for _, r := range res {
 		fmt.Printf("Sending Message to Phone number %s \n", r[0])
-		sendDocumentMessage(wac, r[0], "document.pdf")
 		sendTextMessage(wac, r[0])
 		sendImageMessage(wac, r[0], "image.jpg")
+		sendDocumentMessage(wac, r[0], "document.pdf")
 		time.Sleep(3 * time.Second)
 	}
 }
@@ -78,7 +78,6 @@ func sendTextMessage(wac *whatsapp.Conn, phoneNumber string) {
 			RemoteJid: phoneNumber + "@s.whatsapp.net",
 		},
 		ContextInfo: ContextInfo,
-		// Text:        "As-salamu alaykum \n\nThanks for Contacting Hayder Ali & Company \n\n*Following are the Project Details for Defence Skyline*",
 		Text: text,
 	}
 
@@ -122,7 +121,7 @@ func sendImageMessage(wac *whatsapp.Conn, phoneNumber string, imageName string) 
 
 func sendDocumentMessage(wac *whatsapp.Conn, phoneNumber string, documentName string) {
 
-	content, err := ioutil.ReadFile("image.txt")
+	content, err := ioutil.ReadFile("project.txt")
 	text := string(content)
 
 	img, err := os.Open(documentName)
