@@ -19,7 +19,7 @@ func main() {
 	//create new WhatsApp connection
 	res := parseCsv("input.csv")
 
-	wac, err := whatsapp.NewConn(10 * time.Second)
+	wac, err := whatsapp.NewConn(120 * time.Second)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "error creating connection: %v\n", err)
 		return
@@ -37,8 +37,10 @@ func main() {
 		fmt.Printf("Sending Message to Phone number %s \n", r[0])
 		sendTextMessage(wac, r[0])
 		sendImageMessage(wac, r[0], "image.jpg")
+		sendImageMessage(wac, r[0], "image2.jpg")
 		sendDocumentMessage(wac, r[0], "document.pdf")
-		time.Sleep(3 * time.Second)
+		fmt.Printf("Sleeping for 35 Seconds \n")
+		time.Sleep(35 * time.Second)
 	}
 }
 
@@ -84,7 +86,6 @@ func sendTextMessage(wac *whatsapp.Conn, phoneNumber string) {
 	msgId, err := wac.Send(msg)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "error sending image message: %v", err)
-		os.Exit(1)
 	} else {
 		fmt.Println("Message Sent -> ID : " + msgId)
 	}
@@ -113,7 +114,6 @@ func sendImageMessage(wac *whatsapp.Conn, phoneNumber string, imageName string) 
 	msgId, err := wac.Send(msg2)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "error sending image message: %v", err)
-		os.Exit(1)
 	} else {
 		fmt.Println("Message Sent -> ID : " + msgId)
 	}
@@ -142,7 +142,6 @@ func sendDocumentMessage(wac *whatsapp.Conn, phoneNumber string, documentName st
 	msgId, err := wac.Send(msg2)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "error sending image message: %v", err)
-		os.Exit(1)
 	} else {
 		fmt.Println("Message Sent -> ID : " + msgId)
 	}
